@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Laundry Service | Busi's Laundry</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="manifest" href="manifest.json" />
+  <style>
+   
+    /* WhatsApp Button Style */
+    .whatsapp-button {
+      display: inline-block;
+      background-color: #25D366;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="hero">
+      <h1>Busi's Laundry Service</h1>
+      <p>Book a slot and let me take care of your clothes!</p>
+    </div>
+
+  </header>
+<section id="booking">
+  <h2>Book Your Laundry Slot</h2>
+
+  <form id="booking-form">
+    <label for="name">Full Name:</label>
+    <input type="text" id="name" name="name" required />
+
+    <label for="email">Email Address:</label>
+    <input type="email" id="email" name="email" required />
+
+    <label for="phone">Phone Number:</label>
+    <input type="tel" id="phone" name="phone" required />
+
+    <label for="date">Preferred Date:</label>
+    <input type="date" id="date" name="date" required />
+
+    <label for="time">Preferred Time:</label>
+    <input type="time" id="time" name="time" required />
+
+    <label for="service">Service Type:</label>
+    <select id="service" name="service">
+      <option value="wash">Wash Only</option>
+      <option value="wash-iron">Wash & Iron</option>
+      <option value="dry-clean">Dry Cleaning</option>
+    </select>
+
+    <label for="notes">Special Instructions:</label>
+    <textarea id="notes" name="notes" rows="4"></textarea>
+    
+    <button type="submit">BOOK NOW</button>
+    <div class="spinner" id="spinner"></div>
+  </form>
+  </section>
+
+    <!-- Service Info -->
+  <section id="laundry-info">
+    <h2>Service & Price List</h2>
+    <button id="toggle-prices">Hide Prices</button>
+    <div id="price-section">
+      <p><strong>Contact:</strong></p>
+      <ul>
+        <li>📞 064 688 6917 (Call/WhatsApp)</li>
+        <li>📞 081 8853 818 (Call Only)</li>
+        <li>📍 Stand No: 24423, Ext 16, Emandela</li>
+      </ul>
+
+      <h3>💰 Washing Only</h3>
+      <ul>
+        <li>Small Basket – R100</li>
+        <li>Medium Basket – R120</li>
+        <li>Large Basket – R150</li>
+      </ul>
+
+      <h3>🧺 Washing + Ironing</h3>
+      <ul>
+        <li>Small Basket – R120</li>
+        <li>Medium Basket – R150</li>
+        <li>Large Basket – R200</li>
+      </ul>
+
+      <h3>🛏️ Blankets</h3>
+      <ul>
+        <li>Single Bed Sheet – R40</li>
+        <li>Double Bed Sheet – R60</li>
+        <li>Queen Bed Sheet – R80</li>
+        <li>King Size Bed Sheet – R90</li>
+      </ul>
+
+      <h3>🛌 Duvets</h3>
+      <ul>
+        <li>Single Bed – R40</li>
+        <li>Double Bed – R50</li>
+        <li>Queen Bed – R75</li>
+        <li>King Size – R90</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="services">
+    <h2>Why Choose Busi's?</h2>
+    <ul>
+      <li>✅ Fast turnaround</li>
+      <li>✅ Affordable pricing</li>
+      <li>✅ Gentle care for all fabrics</li>
+      <li>✅ Pickup & delivery available at an additional price</li>
+    </ul>
+  </section>
+
+  <p><em>Slogan:</em> <strong>“Get the dirt away, keep it clean.”</strong></p>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <h2>Frequently Asked Questions</h2>
+    <ul>
+      <li><strong>Q:</strong> Do you offer same-day service?<br><strong>A:</strong> Yes, for small loads booked before 10 AM.</li>
+      <li><strong>Q:</strong> How do I pay?<br><strong>A:</strong> We accept cash, EFT, and mobile payments.</li>
+    </ul>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials">
+    <h2>What Our Customers Say</h2>
+    <blockquote>“Busi’s service is amazing! My clothes came back fresh and folded.” – Thandi M.</blockquote>
+    <blockquote>“Affordable and reliable. Highly recommend!” – Sipho K.</blockquote>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>📍 Based in Mpumalanga, South Africa, Embalenhle</p>
+    <p>📞 Call or WhatsApp: +27 123 456 789</p>
+    <p>📧 Email: buciemanyawa@gmail.com</p>
+  </footer>
+
+  <!-- WhatsApp Button -->
+  <a href="https://wa.me/27646886917" target="_blank" class="whatsapp-button">💬 Chat on WhatsApp</a>
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js"></script>
+
+<script>
+// Initialize Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyBOEDnm8lrAslK_0R3voof2dAVd7gI40z8",
+  authDomain: "busi-laundry.firebaseapp.com",
+  projectId: "busi-laundry"
+};
+
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Toggle Price List
+  const toggleBtn = document.getElementById('toggle-prices');
+  const priceSection = document.getElementById('price-section');
+
+  if (toggleBtn && priceSection) {
+    toggleBtn.addEventListener('click', () => {
+      const isHidden = priceSection.style.display === 'none';
+      priceSection.style.display = isHidden ? 'block' : 'none';
+      toggleBtn.textContent = isHidden ? 'Hide Prices' : 'Show Prices';
+    });
+  }
+
+  // Disable Past Dates
+  const dateInput = document.getElementById("date");
+  if (dateInput) {
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.setAttribute("min", today);
+  }
+
+  // Show Spinner on Submit
+  const form = document.getElementById('booking-form');
+  const spinner = document.getElementById('spinner');
+
+  if (form) {
+    form.addEventListener('submit', () => {
+      if (spinner) spinner.style.display = 'block';
+    });
+  }
+});
+</script>
+<script src="main.js"></script>
+</body>
+</html>

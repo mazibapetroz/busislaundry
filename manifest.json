@@ -1,0 +1,16 @@
+{
+  "name": "Busi's Laundry Service",
+  "short_name": "Busi Laundry",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3498db",
+  "description": "Book a slot and let Busi take care of your clothes with fast, affordable service.",
+  "icons": [
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
